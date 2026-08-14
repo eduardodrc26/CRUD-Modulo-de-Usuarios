@@ -4,6 +4,10 @@ import com.arqsoft.crudusuarios.dto.UsuarioPatchDTO;
 import com.arqsoft.crudusuarios.dto.UsuarioRequestDTO;
 import com.arqsoft.crudusuarios.dto.UsuarioResponseDTO;
 import com.arqsoft.crudusuarios.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,10 +19,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @RequiredArgsConstructor
+@Tag(name = "Usuarios", description = "Endpoints para crear, consultar, actualizar y eliminar usuarios")
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
+    @Operation(summary = "Crear un nuevo usuario", description = "Registra un usuario encriptando su contraseña y validando reglas de negocio (ej. correo único).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Usuario creado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos o faltantes en el request"),
+            @ApiResponse(responseCode = "409", description = "El correo electrónico ya está registrado")
+    })
     public ResponseEntity<UsuarioResponseDTO> crear(@Valid @RequestBody UsuarioRequestDTO request) {
         UsuarioResponseDTO nuevoUsuario = usuarioService.crear(request);
         return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
@@ -30,6 +41,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Consultar usuario por ID", description = "Obtiene los detalles de un usuario específico sin exponer su contraseña.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
+            @ApiResponse(responseCode = "404", description = "No existe un usuario con el ID proporcionado")
+    })
     public ResponseEntity<UsuarioResponseDTO> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(usuarioService.obtenerPorId(id));
     }

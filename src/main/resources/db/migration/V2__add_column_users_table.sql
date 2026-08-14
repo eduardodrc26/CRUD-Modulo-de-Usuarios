@@ -1,0 +1,3 @@
+ALTER TABLE usuarios
+ADD COLUMN apellido VARCHAR(100) NOT NULL AFTER nombre,
+ADD COLUMN telefono VARCHAR(10) NOT NULL AFTER email;

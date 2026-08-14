@@ -1,5 +1,6 @@
 package com.arqsoft.crudusuarios.service;
 
+import com.arqsoft.crudusuarios.dto.UsuarioPatchDTO;
 import com.arqsoft.crudusuarios.dto.UsuarioRequestDTO;
 import com.arqsoft.crudusuarios.dto.UsuarioResponseDTO;
 
@@ -11,4 +12,5 @@ public interface UsuarioService {
     List<UsuarioResponseDTO> obtenerTodos();
     UsuarioResponseDTO actualizar(Long id, UsuarioRequestDTO request);
     void eliminar(Long id);
+    UsuarioResponseDTO actualizarParcial(Long id, UsuarioPatchDTO request);
 }

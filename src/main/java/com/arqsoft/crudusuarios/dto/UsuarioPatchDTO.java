@@ -1,29 +1,23 @@
 package com.arqsoft.crudusuarios.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public record UsuarioRequestDTO(
-        @NotBlank(message = "El nombre no puede estar vacío")
+public record UsuarioPatchDTO (
         @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El nombre solo debe contener letras y espacios")
         String nombre,
 
-        @NotBlank(message = "El apellido no puede estar vacío")
         @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$", message = "El apellido solo debe contener letras y espacios")
         String apellido,
 
-        @NotBlank(message = "El email es obligatorio")
         @Email(message = "Formato de email inválido")
         String email,
 
-        @NotBlank(message = "El teléfono es obligatorio")
         @Pattern(regexp = "^\\d{10}$", message = "El teléfono debe tener exactamente 10 dígitos numéricos")
         String telefono,
 
-        @NotBlank(message = "La contraseña es obligatoria")
         @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
         String password
-) {
+){
 }

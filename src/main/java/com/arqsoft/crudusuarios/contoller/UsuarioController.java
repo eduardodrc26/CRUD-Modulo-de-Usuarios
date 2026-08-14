@@ -1,5 +1,6 @@
 package com.arqsoft.crudusuarios.contoller;
 
+import com.arqsoft.crudusuarios.dto.UsuarioPatchDTO;
 import com.arqsoft.crudusuarios.dto.UsuarioRequestDTO;
 import com.arqsoft.crudusuarios.dto.UsuarioResponseDTO;
 import com.arqsoft.crudusuarios.service.UsuarioService;
@@ -44,5 +45,13 @@ public class UsuarioController {
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         usuarioService.eliminar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> actulizarParcial(
+            @PathVariable Long id,
+            @Valid @RequestBody UsuarioPatchDTO request
+            ){
+        return ResponseEntity.ok(usuarioService.actualizarParcial(id, request));
     }
 }
